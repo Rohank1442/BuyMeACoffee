@@ -7,23 +7,23 @@
 const hre = require("hardhat");
 
 // Returns the ether balance of a given address.
-async function getBalance(address){
+async function getBalance(address) {
   const balanceBigInt = await hre.ethers.provider.getBalance(address);
   return hre.ethers.utils.formatEther(balanceBigInt);
 }
 
 // Logs the Ether balances for a list of addresses.
-async function printBalances(addresses){
+async function printBalances(addresses) {
   let index = 0;
-  for(const address of addresses){
+  for (const address of addresses) {
     console.log(`Addresses $(index) balance: `, await getBalance(address));
     index++;
   }
 }
 
 // Logs the memos stored on-chain from coffee purchases.
-async function printMemos(memos){
-  for(const memo of memos){
+async function printMemos(memos) {
+  for (const memo of memos) {
     const timestamp = memo.timestamp;
     const tipper = memo.name;
     const tipperAddress = memo.from;
@@ -31,8 +31,6 @@ async function printMemos(memos){
     console.log(`At ${timestamp}, ${tipper} (${tipperAddress}) said: "${message}"`);
   }
 }
-
-
 
 async function main() {
   // Get the example accounts we'll be working with.
@@ -51,7 +49,7 @@ async function main() {
   await printBalances(addresses);
 
   // Buy the owner a few coffees.
-  const tip = {value: hre.ethers.utils.parseEther("1")};
+  const tip = { value: hre.ethers.utils.parseEther("1") };
   await buyMeACoffee.connect(tipper).buyCoffee("Rahul", "You're a good coder", tip);
   await buyMeACoffee.connect(tipper2).buyCoffee("Suprit", "You're a good coder", tip);
   await buyMeACoffee.connect(tipper3).buyCoffee("Prasad", "You're a good coder", tip);
