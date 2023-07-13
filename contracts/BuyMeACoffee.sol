@@ -32,7 +32,7 @@ contract BuyMeACoffee {
         return memos;
     }
 
-    function BuyCOffee(string memory _name, string memory _message, string memory _CoffeeType) public payable{
+    function buyCoffee(string memory _name, string memory _message, string memory _CoffeeType) public payable{
         require(msg.value > 0, "Can't buy Coffee for free");
 
         memos.push(Memo(

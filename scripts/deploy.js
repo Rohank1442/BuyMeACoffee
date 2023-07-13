@@ -16,7 +16,7 @@ async function getBalance(address) {
 async function printBalances(addresses) {
   let index = 0;
   for (const address of addresses) {
-    console.log(`Addresses $(index) balance: `, await getBalance(address));
+    console.log(`Addresses ${index} balance: `, await getBalance(address));
     index++;
   }
 }
@@ -31,18 +31,19 @@ async function printMemos(memos) {
     console.log(`At ${timestamp}, ${tipper} (${tipperAddress}) said: "${message}"`);
   }
 }
-
+console.log("2");
 async function main() {
   // Get the example accounts we'll be working with.
   const [owner, tipper, tipper2, tipper3] = await hre.ethers.getSigners();
-
-  const BuyMeACoffee = await hre.ethers.getContractFactory("BuyMeACoffee");
+  console.log("3");
+  const BuyMeACoffee = await hre.ethers.getContractFactory('BuyMeACoffee');
   const buyMeACoffee = await BuyMeACoffee.deploy();
-
+  console.log("4");
   // Deploy the contract.
   await buyMeACoffee.deployed();
+  console.log("6");
   console.log("BuyMeACoffee deployed to:", buyMeACoffee.address);
-
+  console.log("5");
   // Check balances before the coffee purchase.
   const addresses = [owner.address, tipper.address, buyMeACoffee.address];
   console.log("== start ==");
@@ -74,7 +75,9 @@ async function main() {
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+main()
+  .then(() => process.exit(0))
+  .catch(error => {
+    console.error(error);
+    process.exit(1);
+  });
