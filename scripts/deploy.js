@@ -31,17 +31,16 @@ async function printMemos(memos) {
     console.log(`At ${timestamp}, ${tipper} (${tipperAddress}) said: "${message}"`);
   }
 }
-console.log("2");
+
 async function main() {
   // Get the example accounts we'll be working with.
   const [owner, tipper, tipper2, tipper3] = await hre.ethers.getSigners();
-  console.log("3");
-  const BuyMeACoffee = await hre.ethers.getContractFactory('BuyMeACoffee');
-  const buyMeACoffee = await BuyMeACoffee.deploy();
-  console.log("4");
+  const buyMeACoffee = await hre.ethers.deployContract('BuyMeACoffee');
+  // const buyMeACoffee = await BuyMeACoffee.deploy();
+
   // Deploy the contract.
-  await buyMeACoffee.deployed();
-  console.log("6");
+  await buyMeACoffee.waitForDeployment();
+  
   console.log("BuyMeACoffee deployed to:", buyMeACoffee.address);
   console.log("5");
   // Check balances before the coffee purchase.
@@ -70,7 +69,6 @@ async function main() {
   console.log("== memos ==");
   const memos = await buyMeACoffee.getMemos();
   printMemos(memos);
-
 }
 
 // We recommend this pattern to be able to use async/await everywhere
