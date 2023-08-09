@@ -29,13 +29,13 @@ async function printMemos(memos) {
 async function main() {
   // Get the example accounts we'll be working with.
   const [owner, tipper, tipper2, tipper3] = await hre.ethers.getSigners();
-  // const buyMeACoffee = await hre.ethers.deployContract('BuyMeACoffee');
-  const BuyMeACoffee = await hre.ethers.getContractFactory("BuyMeACoffee");
-  const buyMeACoffee = await BuyMeACoffee.deploy();
-
+  console.log("3");
+  // const BuyMeACoffee = await 
+  const buyMeACoffee = await ethers.deployContract("BuyMeACoffee");
+  console.log("4");
   // Deploy the contract.
-  // await buyMeACoffee.waitForDeployment();
-  await buyMeACoffee.deployed();
+  await buyMeACoffee.waitForDeployment();
+  console.log("6");
   console.log("BuyMeACoffee deployed to:", buyMeACoffee.address);
   console.log("5");
   // Check balances before the coffee purchase.
@@ -44,26 +44,27 @@ async function main() {
   await printBalances(addresses);
 
   // Buy the owner a few coffees.
-  // const tip = { value: hre.ethers.utils.parseEther("1") };
-  // await buyMeACoffee.connect(tipper).buyCoffee("Rahul", "You're a good coder", tip);
-  // await buyMeACoffee.connect(tipper2).buyCoffee("Suprit", "You're a good coder", tip);
-  // await buyMeACoffee.connect(tipper3).buyCoffee("Prasad", "You're a good coder", tip);
+  const tip = { value: hre.ethers.utils.parseEther("1") };
+  await buyMeACoffee.connect(tipper).buyCoffee("Rahul", "You're a good coder", tip);
+  await buyMeACoffee.connect(tipper2).buyCoffee("Suprit", "You're a good coder", tip);
+  await buyMeACoffee.connect(tipper3).buyCoffee("Prasad", "You're a good coder", tip);
 
-  // // Check balances after the coffee purchase.
-  // console.log("== bought coffee ==");
-  // await printBalances(addresses);
+  // Check balances after the coffee purchase.
+  console.log("== bought coffee ==");
+  await printBalances(addresses);
 
-  // // Withdraw.
-  // await buyMeACoffee.connect(owner).withdrawTips();
+  // Withdraw.
+  await buyMeACoffee.connect(owner).withdrawTips();
 
-  // // Check balances after withdrawal.
-  // console.log("== withdrawTips ==");
-  // await printBalances(addresses);
+  // Check balances after withdrawal.
+  //console.log("== withdrawTips ==");
+  await printBalances(addresses);
 
-  // // Check out the memos.
-  // console.log("== memos ==");
-  // const memos = await buyMeACoffee.getMemos();
-  // printMemos(memos);
+  // Check out the memos.
+  console.log("== memos ==");
+  const memos = await buyMeACoffee.getMemos();
+  printMemos(memos);
+
 }
 
 // We recommend this pattern to be able to use async/await everywhere
